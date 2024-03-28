@@ -4,6 +4,7 @@ function Header() {
   return (
     <div id="heading">
       <h1>Seyyahlar Haber</h1>
+      <hr />
     </div>
   );
 }

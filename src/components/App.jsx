@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import News from "./News";
 import axios from "axios";
 import Paging from "./Paging";
+import Category from "./Category";
 
 const yourApiKey = "apikey 6S5cANnC5ZeicD98G9pJmE:3fxjlP9aUTeF15RNqbKUNO";
 const config = {
@@ -15,31 +16,45 @@ const config = {
 
 function App() {
   const [news, setNews] = useState([]);
+  const [categories, setCategories] = useState([
+    "general",
+    "business",
+    "entertainment",
+    "health",
+    "science",
+    "sports",
+    "technology",
+  ]);
+
   var [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
   function pagePlus() {
-    setPage((page += 1));
+    setPage(page + 1);
   }
 
   function pageMinus() {
-    setPage((page -= 1));
+    setPage(page - 1);
   }
-
-  if (page < 1) {
-    setPage(1);
-  }
-  var pageNumber = page - 1;
 
   useEffect(() => {
     fetchData();
     window.scrollTo(0, 0);
   }, [page]);
 
-  async function fetchData() {
+  function changeCategory(newCategory) {
+    setNews([]);
+    setPage(1);
+    setLoading(true); // Yeni kategoriye geçtiğinizde loading durumunu başlatın
+    fetchData(newCategory);
+  }
+
+  async function fetchData(newCategory) {
     try {
       const response = await axios.get(
-        `https://api.collectapi.com/news/getNews?country=tr&tag=general&paging=${pageNumber}`,
+        `https://api.collectapi.com/news/getNews?country=tr&tag=${newCategory}&paging=${
+          page - 1
+        }`,
         config
       );
       setNews(response.data.result); // Veriyi sakla
@@ -52,6 +67,10 @@ function App() {
   return (
     <div>
       <Header />
+      {categories.map((value) => (
+        <Category key={value} name={value} tag={() => changeCategory(value)} />
+      ))}
+
       {/* News dizisini map ederek her bir haber öğesini render et */}
       {loading ? (
         <p>Loading...</p>

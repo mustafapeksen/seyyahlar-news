@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
+// Styles for the loading container and circles
 const loadingContainer = {
   width: "4rem",
   height: "4rem",
@@ -16,6 +17,7 @@ const loadingCircle = {
   borderRadius: "0.5rem",
 };
 
+// Variants for animation
 const loadingContainerVariants = {
   start: {
     transition: {
@@ -43,10 +45,13 @@ const loadingCircleTransition = {
   ease: "easeInOut",
 };
 
+// Loading component
 const Loading = () => {
   return (
     <div>
+      {/* Overlay */}
       <div className="fixed  w-full min-h-screen z-50 bg-black opacity-30" />
+      {/* Loading animation */}
       <div className="flex fixed w-full justify-center items-center h-screen">
         <motion.div
           style={loadingContainer}
@@ -54,6 +59,7 @@ const Loading = () => {
           initial="start"
           animate="end"
         >
+          {/* Three loading circles */}
           <motion.span
             style={loadingCircle}
             variants={loadingCircleVariants}

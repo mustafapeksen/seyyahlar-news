@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import News from "./News";
-import axios from "axios";
-import Paging from "./Paging";
-import Category from "./Category";
-import Loading from "./Loading";
+import Header from "./Header"; // Importing the Header component
+import Footer from "./Footer"; // Importing the Footer component
+import News from "./News"; // Importing the News component
+import axios from "axios"; // Importing the Axios library
+import Paging from "./Paging"; // Importing the Paging component
+import Category from "./Category"; // Importing the Category component
+import Loading from "./Loading"; // Importing the Loading component
 
-const yourApiKey = "/";
-const countryCode = "tr";
+const yourApiKey = "/"; // Enter your API key here or leave it blank
+const countryCode = "tr"; // Country code to fetch news from the API
 const config = {
   headers: {
     "Content-Type": "application/json",
@@ -17,8 +17,9 @@ const config = {
 };
 
 function App() {
-  const [news, setNews] = useState([]);
-  const [categories, setCategories] = useState([
+  // State declarations
+  const [news, setNews] = useState([]); // State to hold news data
+  const [categories, setCategories] = useState([ // State to hold categories
     { turkish: "genel", english: "general" },
     { turkish: "eğlence", english: "entertainment" },
     { turkish: "sağlık", english: "health" },
@@ -27,14 +28,15 @@ function App() {
     { turkish: "dünya", english: "world" },
   ]);
 
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1); // State to hold page number
+  const [loading, setLoading] = useState(false); // State to hold loading status
 
   useEffect(() => {
-    fetchData(); // Sayfa yüklendiğinde veriyi getir
-    window.scrollTo(0, 0);
-  }, [page]);
+    fetchData(); // useEffect hook to fetch data when the page loads
+    window.scrollTo(0, 0); // Scroll to top when the page loads
+  }, [page]); // useEffect depends on the 'page' state
 
+  // Function to fetch data from the API
   async function fetchData(newCategory) {
     try {
       const response = await axios.get(
@@ -43,46 +45,49 @@ function App() {
         }&paging=${page - 1}`,
         config
       );
-      setNews(response.data.result);
+      setNews(response.data.result); // Set the news data
     } catch (error) {
-      console.error("Veri alınırken bir hata oluştu:", error);
-      // Hata durumunda haberleri test verisiyle doldur
+      console.error("Error while fetching data:", error); // Log error to console
+      // Fill news with test data in case of error
       setNews([]);
     }
-    setLoading(false);
+    setLoading(false); // Turn off loading status
   }
 
+  // Function to handle category change
   function changeCategory(newCategory) {
-    setNews([]); // Yeni kategoriye geçtiğinizde haberleri temizle
-    setPage(1);
-    setLoading(true); // Yeni kategoriye geçtiğinizde loading durumunu başlatın
-    fetchData(newCategory);
+    setNews([]); // Clear news when changing category
+    setPage(1); // Reset page number
+    setLoading(true); // Start loading
+    fetchData(newCategory); // Fetch data for the new category
   }
 
+  // Function to increment page number
   function pagePlus() {
     setPage((prevPage) => prevPage + 1);
   }
 
+  // Function to decrement page number
   function pageMinus() {
-    setPage((prevPage) => Math.max(prevPage - 1, 1)); // Sayfa en az 1 olmalı
+    setPage((prevPage) => Math.max(prevPage - 1, 1)); // Page should be at least 1
   }
 
   return (
     <div className="container">
-      <Header />
+      <Header /> {/* Header component */}
       <div id="category">
-        {/* Kategorileri listele */}
+        {/* List categories */}
         {categories.map((value, index) => (
           <Category
             key={index}
-            name={value.turkish}
-            tag={() => changeCategory(value.english)}
+            name={value.turkish} // Turkish category name
+            tag={() => changeCategory(value.english)} // English category name
           />
         ))}
       </div>
-      {/* Haberleri listeleyin */}
-      {loading ? (
-        <Loading />
+      {/* Display news */}
+      {loading ? ( // Check loading status
+        <Loading /> // Show Loading component if loading
       ) : (
         news.map((item, index) => (
           <News
@@ -96,9 +101,9 @@ function App() {
           />
         ))
       )}
-      {/* Sayfalama işlemleri */}
-      <Paging minus={pageMinus} number={page} plus={pagePlus} />
-      <Footer />
+      {/* Pagination */}
+      <Paging minus={pageMinus} number={page} plus={pagePlus} /> {/* Paging component */}
+      <Footer /> {/* Footer component */}
     </div>
   );
 }

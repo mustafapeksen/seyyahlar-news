@@ -7,7 +7,8 @@ import Paging from "./Paging";
 import Category from "./Category";
 import Loading from "./Loading";
 
-const yourApiKey = "apikey 6S5cANnC5ZeicD98G9pJmE:3fxjlP9aUTeF15RNqbKUNO";
+const yourApiKey = "/";
+const countryCode = "tr";
 const config = {
   headers: {
     "Content-Type": "application/json",
@@ -37,7 +38,7 @@ function App() {
   async function fetchData(newCategory) {
     try {
       const response = await axios.get(
-        `https://api.collectapi.com/news/getNews?country=tr&tag=${
+        `https://api.collectapi.com/news/getNews?country=${countryCode}&tag=${
           newCategory || categories[0].english
         }&paging=${page - 1}`,
         config

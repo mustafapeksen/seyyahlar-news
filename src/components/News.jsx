@@ -2,12 +2,15 @@ import React from "react";
 
 function News(props) {
   return (
-    <div key={props.key}>
-      <h2>{props.title}</h2>
+    <div id={props.id}>
       <img src={props.image} alt="" />
+      <h2>{props.title}</h2>
+
       <p>{props.description}</p>
       <p>Kaynak {props.source}</p>
-      <a href={props.url}>Haberin devamı için tıklayınız...</a>
+      <a className="news-url" href={props.url}>
+        Haberin devamı için tıklayınız...
+      </a>
       <hr />
     </div>
   );

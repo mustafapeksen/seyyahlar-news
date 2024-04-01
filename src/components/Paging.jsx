@@ -1,11 +1,13 @@
 import React from "react";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 function Paging(props) {
   return (
     <div className="paging">
-      <p onClick={props.minus}>-</p>
-      <p>{props.number}</p>
-      <p onClick={props.plus}>+</p>
+      <ArrowLeftIcon onClick={props.minus} />
+      <p id="page-number">{props.number}</p>
+      <ArrowRightIcon onClick={props.plus} />
     </div>
   );
 }

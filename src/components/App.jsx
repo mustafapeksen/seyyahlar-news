@@ -5,6 +5,7 @@ import News from "./News";
 import axios from "axios";
 import Paging from "./Paging";
 import Category from "./Category";
+import Loading from "./Loading";
 
 const yourApiKey = "apikey 6S5cANnC5ZeicD98G9pJmE:3fxjlP9aUTeF15RNqbKUNO";
 const config = {
@@ -17,67 +18,75 @@ const config = {
 function App() {
   const [news, setNews] = useState([]);
   const [categories, setCategories] = useState([
-    "general",
-    "business",
-    "entertainment",
-    "health",
-    "science",
-    "sports",
-    "technology",
+    { turkish: "genel", english: "general" },
+    { turkish: "eğlence", english: "entertainment" },
+    { turkish: "sağlık", english: "health" },
+    { turkish: "ekonomi", english: "economy" },
+    { turkish: "teknoloji", english: "technology" },
+    { turkish: "dünya", english: "world" },
   ]);
 
-  var [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  function pagePlus() {
-    setPage(page + 1);
-  }
-
-  function pageMinus() {
-    setPage(page - 1);
-  }
-
   useEffect(() => {
-    fetchData();
+    fetchData(); // Sayfa yüklendiğinde veriyi getir
     window.scrollTo(0, 0);
   }, [page]);
 
+  async function fetchData(newCategory) {
+    try {
+      const response = await axios.get(
+        `https://api.collectapi.com/news/getNews?country=tr&tag=${
+          newCategory || categories[0].english
+        }&paging=${page - 1}`,
+        config
+      );
+      setNews(response.data.result);
+    } catch (error) {
+      console.error("Veri alınırken bir hata oluştu:", error);
+      // Hata durumunda haberleri test verisiyle doldur
+      setNews([]);
+    }
+    setLoading(false);
+  }
+
   function changeCategory(newCategory) {
-    setNews([]);
+    setNews([]); // Yeni kategoriye geçtiğinizde haberleri temizle
     setPage(1);
     setLoading(true); // Yeni kategoriye geçtiğinizde loading durumunu başlatın
     fetchData(newCategory);
   }
 
-  async function fetchData(newCategory) {
-    try {
-      const response = await axios.get(
-        `https://api.collectapi.com/news/getNews?country=tr&tag=${newCategory}&paging=${
-          page - 1
-        }`,
-        config
-      );
-      setNews(response.data.result); // Veriyi sakla
-    } catch (error) {
-      console.error("Veri alınırken bir hata oluştu:", error);
-    }
-    setLoading(false);
+  function pagePlus() {
+    setPage((prevPage) => prevPage + 1);
+  }
+
+  function pageMinus() {
+    setPage((prevPage) => Math.max(prevPage - 1, 1)); // Sayfa en az 1 olmalı
   }
 
   return (
-    <div>
+    <div className="container">
       <Header />
-      {categories.map((value) => (
-        <Category key={value} name={value} tag={() => changeCategory(value)} />
-      ))}
-
-      {/* News dizisini map ederek her bir haber öğesini render et */}
+      <div id="category">
+        {/* Kategorileri listele */}
+        {categories.map((value, index) => (
+          <Category
+            key={index}
+            name={value.turkish}
+            tag={() => changeCategory(value.english)}
+          />
+        ))}
+      </div>
+      {/* Haberleri listeleyin */}
       {loading ? (
-        <p>Loading...</p>
+        <Loading />
       ) : (
-        news.map((item) => (
+        news.map((item, index) => (
           <News
-            key={item.key}
+            key={index}
+            id={item.key}
             title={item.name}
             image={item.image}
             description={item.description}
@@ -86,6 +95,7 @@ function App() {
           />
         ))
       )}
+      {/* Sayfalama işlemleri */}
       <Paging minus={pageMinus} number={page} plus={pagePlus} />
       <Footer />
     </div>

@@ -19,7 +19,8 @@ const config = {
 function App() {
   // State declarations
   const [news, setNews] = useState([]); // State to hold news data
-  const [categories, setCategories] = useState([ // State to hold categories
+  const [categories, setCategories] = useState([
+    // State to hold categories
     { turkish: "genel", english: "general" },
     { turkish: "eğlence", english: "entertainment" },
     { turkish: "sağlık", english: "health" },
@@ -85,6 +86,21 @@ function App() {
           />
         ))}
       </div>
+      <div className="dropdown">
+        {/* Dropdown menu visible only when the screen is small */}
+        <select
+          id="categoryDropdown"
+          className="dropdown-menu"
+          onChange={(e) => changeCategory(e.target.value)}
+        >
+          {/* List categories */}
+          {categories.map((value, index) => (
+            <option value={value.english} key={index}>
+              {value.turkish.toUpperCase()}
+            </option>
+          ))}
+        </select>
+      </div>
       {/* Display news */}
       {loading ? ( // Check loading status
         <Loading /> // Show Loading component if loading
@@ -102,7 +118,8 @@ function App() {
         ))
       )}
       {/* Pagination */}
-      <Paging minus={pageMinus} number={page} plus={pagePlus} /> {/* Paging component */}
+      <Paging minus={pageMinus} number={page} plus={pagePlus} />{" "}
+      {/* Paging component */}
       <Footer /> {/* Footer component */}
     </div>
   );

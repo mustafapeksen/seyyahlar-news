@@ -1,6 +1,12 @@
 body {
     max-width: 60em;
     margin: 0 auto;
+    font-family: "Noto Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100;
 }
 
 #logo {
@@ -14,6 +20,9 @@ h1 {
     color: #E1E2EF;
     font-size: 3em;
     margin: 1em 1em;
+    font-family: "Abril Fatface", serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 #heading,
@@ -25,8 +34,8 @@ footer {
 }
 
 img {
-    width: 15em;
-    height: 7.5em;
+    width: 30em;
+    height: 25em;
     float: left;
     margin-right: 3em;
     margin-bottom: 2em;
@@ -41,9 +50,48 @@ img {
     padding-bottom: 2em;
 }
 
+#categoryDropdown {
+    display: none;
+}
+
+.dropdown-menu {
+    font-family: "Noto Sans", sans-serif;
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(48, 55, 122, 1) 35%, rgba(20, 30, 121, 1) 100%);
+    color: #E1E2EF;
+    border: 0;
+    border-radius: 0px 0px 5px 5px;
+    padding: 1em;
+}
+
+.dropdown-menu option {
+    color: black;
+}
+
+@media screen and (max-width: 600px) {
+    img {
+        width: 23em;
+        height: 18em;
+    }
+
+    #category {
+        display: none;
+    }
+
+    #categoryDropdown {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+
 h2 {
     font-size: 2.5em;
     margin-bottom: 5px;
+    font-family: "Abril Fatface", serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 p {
@@ -76,6 +124,7 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 
 footer {

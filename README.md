@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/mustafapeksen/seyyahlar-news">
-    <img src="images/SeyyahlarLogo.jpg" alt="Logo" width="80" height="80">
+    <img src="/images/SeyyahlarLogo.jpg" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">seyyahlar-news</h3>

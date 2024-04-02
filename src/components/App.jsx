@@ -7,7 +7,7 @@ import Paging from "./Paging"; // Importing the Paging component
 import Category from "./Category"; // Importing the Category component
 import Loading from "./Loading"; // Importing the Loading component
 
-const yourApiKey = "apikey 27q6B0B5kDFfv6CUgKf1fn:1pobEzrOEQYjsmHN2lusCC"; // Enter your API key here or leave it blank
+const yourApiKey = "apikey 2WseQuzV5LOZKRzGVmjBD2:5zyhvxNc3093o9iX4cbVel"; // Enter your API key here or leave it blank
 const countryCode = "tr"; // Country code to fetch news from the API
 const config = {
   headers: {

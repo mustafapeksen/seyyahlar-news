@@ -63,8 +63,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 This project is a web application called "Seyyahlar Haber" that provides users with news articles from various categories such as general, entertainment, health, economy, technology, and world news. Users can navigate through different categories, view news articles, and paginate through multiple pages of articles.
 
 The application fetches data from an external API and displays it dynamically using React.js. It also utilizes Material-UI icons for pagination buttons and provides a loading animation while fetching data.
